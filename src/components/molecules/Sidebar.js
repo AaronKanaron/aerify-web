@@ -1,25 +1,24 @@
 import React from 'react';
 import * as icon from "../packets/DefaultIcons";
 import Playlist from "../atoms/SidebarPlaylist";
-import {env} from '../../api/requests';
-import { Link, useLocation } from 'react-router-dom';
+import { auth } from '../../api/requests';
+import { Link } from 'react-router-dom';
 
 export default class Sidebar extends React.PureComponent {
 	constructor (props) {
 		super(props);
-		this.state = {
-			playlists: [],
-		}
+		this.state = { playlists: [] }
 	}
 
 
 	componentDidMount() {
 		( async () => {
-			await fetch(`https://backend.artur.red/api/creator/${env.user_id}`, {
-				method: "GET", 
+			await fetch(`https://api.spotify.com/v1/me/playlists`, {
+				method: "GET",
+				headers: auth,
 			}).then(async response => await response.json()).then(data => {
-				const playlists = data.playlists;
-				
+				const playlists = data.items;
+				console.log(playlists)
 				this.setState({ playlists })
 			})
 		})();
@@ -54,8 +53,8 @@ export default class Sidebar extends React.PureComponent {
 							<icon.IoIosAddCircleOutline size="30" className='icon'></icon.IoIosAddCircleOutline>
 						</div>
 						{
-							this.state.playlists.map((playlist) => {
-								return <Playlist cover={playlist.cover} id={playlist.id}/>
+							this.state.playlists.map((playlist,index) => {
+								return <Playlist cover={playlist.images[0].url} id={playlist.id} key={index}/>
 							})
 						}
 						
