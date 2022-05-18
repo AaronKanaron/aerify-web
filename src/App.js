@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import * as Layout from "./components/packets/DefaultLayout";
+import React from 'react';
+
+/* Scenes */
+import Home from './scenes/Home';
+import Playlist from './scenes/Playlist';
+
+
+import { 
+	BrowserRouter,
+	Routes, // instead of "Switch"
+	Route,
+} from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	
+	return (
+		<BrowserRouter>
+			<div className="app-container">
+				<Layout.Header></Layout.Header>
+				<Layout.Sidebar ></Layout.Sidebar>
+
+				<Routes>
+					<Route exact path="/" element={ <Home />} />
+					<Route exact path="/playlist/:id" element={ <Playlist />} />
+				</Routes>
+
+				<Layout.Playbar title={1}></Layout.Playbar>
+			</div>
+		</BrowserRouter>
+	);
 }
 
 export default App;
