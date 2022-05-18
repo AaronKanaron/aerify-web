@@ -4,6 +4,7 @@ import React from 'react';
 
 /* Scenes */
 import Home from './scenes/Home';
+import _404 from './scenes/404';
 import Playlist from './scenes/Playlist';
 
 
@@ -23,6 +24,7 @@ function App() {
 
 				<Routes>
 					<Route exact path="/" element={ <Home />} />
+					<Route exact path="/*" element={ <_404 />} />
 					<Route exact path="/playlist/:id" element={ <Playlist />} />
 				</Routes>
 
